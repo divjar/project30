@@ -7,11 +7,14 @@ import {
   fetchElectricityData 
 } from '../api/api';
 import { SensorData, ApiAsapData, ListrikData } from '../types';
+import { format } from 'date-fns';
+import { Download } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   const [sensor1Data, setSensor1Data] = useState<SensorData | null>(null);
   const [sensor2Data, setSensor2Data] = useState<SensorData | null>(null);
   const [fireSmokeData, setFireSmokeData] = useState<ApiAsapData | null>(null);
+  const [fireSmokeData2, setFireSmokeData2] = useState<ApiAsapData | null>(null);
   const [electricityData, setElectricityData] = useState<ListrikData | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
@@ -19,16 +22,18 @@ const Dashboard: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const [sensor1, sensor2, fireSmoke, electricity] = await Promise.all([
+      const [sensor1, sensor2, fireSmoke, fireSmoke2, electricity] = await Promise.all([
         fetchSensor1Data(),
         fetchSensor2Data(),
         fetchFireSmokeData(),
+        fetchFireSmokeData(), // Second fire/smoke sensor
         fetchElectricityData()
       ]);
       
       setSensor1Data(sensor1);
       setSensor2Data(sensor2);
       setFireSmokeData(fireSmoke);
+      setFireSmokeData2(fireSmoke2);
       setElectricityData(electricity);
       setLastUpdate(new Date());
     } catch (error) {
@@ -46,6 +51,18 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* Header with Last Updated */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold text-white">Dashboard Overview</h2>
+        <div className="flex items-center gap-4">
+          <span className="text-gray-400 text-sm">
+            Last updated: {format(lastUpdate, 'HH:mm:ss')}
+          </span>
+          <Download className="text-gray-400 w-5 h-5" />
+        </div>
+      </div>
+
+      {/* Row 1: Phase Voltages */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="col-span-1">
           <SensorGauge
@@ -90,7 +107,8 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Row 2: Temperature and Humidity */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="col-span-1">
           <SensorGauge
             title="Temperature (NOC)"
@@ -148,10 +166,11 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Row 3: Fire and Smoke Sensors */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="col-span-1">
           <SensorGauge
-            title="Fire Detection"
+            title="Fire Detection (NOC)"
             value={fireSmokeData?.api_value || 0}
             minValue={0}
             maxValue={100}
@@ -165,8 +184,36 @@ const Dashboard: React.FC = () => {
         
         <div className="col-span-1">
           <SensorGauge
-            title="Smoke Detection"
+            title="Smoke Detection (NOC)"
             value={fireSmokeData?.asap_value || 0}
+            minValue={0}
+            maxValue={100}
+            unit="%"
+            colorStart="#10b981"
+            colorEnd="#64748b"
+            lastUpdate={lastUpdate}
+            showStatus={true}
+          />
+        </div>
+
+        <div className="col-span-1">
+          <SensorGauge
+            title="Fire Detection (UPS)"
+            value={fireSmokeData2?.api_value || 0}
+            minValue={0}
+            maxValue={100}
+            unit="%"
+            colorStart="#10b981"
+            colorEnd="#ef4444"
+            lastUpdate={lastUpdate}
+            showStatus={true}
+          />
+        </div>
+        
+        <div className="col-span-1">
+          <SensorGauge
+            title="Smoke Detection (UPS)"
+            value={fireSmokeData2?.asap_value || 0}
             minValue={0}
             maxValue={100}
             unit="%"
