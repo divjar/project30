@@ -7,8 +7,6 @@ import {
   fetchElectricityData 
 } from '../api/api';
 import { SensorData, ApiAsapData, ListrikData } from '../types';
-import { format } from 'date-fns';
-import { Download } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   const [sensor1Data, setSensor1Data] = useState<SensorData | null>(null);
@@ -51,17 +49,6 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header with Last Updated */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-white">Dashboard Overview</h2>
-        <div className="flex items-center gap-4">
-          <span className="text-gray-400 text-sm">
-            Last updated: {format(lastUpdate, 'HH:mm:ss')}
-          </span>
-          <Download className="text-gray-400 w-5 h-5" />
-        </div>
-      </div>
-
       {/* Row 1: Phase Voltages */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="col-span-1">
