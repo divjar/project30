@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+#      - "80:80"
+      - "443:443"
+    depends_on:
+      - api-server
+    environment:
+      - VITE_API_URL=http://api-server:3000/api
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+
+  api-server:
+    build:
+      context: ./api-server
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./api-server/.env
+    environment:
+      - DB_HOST=10.10.11.27
+      - DB_USER=root
+      - DB_PASSWORD=bismillah123
+      - DB_NAME=suhu
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+
+networks:
+  monitoring-network:
+    driver: bridge
