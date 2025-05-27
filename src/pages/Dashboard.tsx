@@ -50,7 +50,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Row 1: Phase Voltages */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="col-span-1">
           <SensorGauge
             title="Phase R Voltage"
@@ -83,6 +83,20 @@ const Dashboard: React.FC = () => {
           <SensorGauge
             title="Phase T Voltage"
             value={electricityData?.phase_t || 0}
+            minValue={180}
+            maxValue={260}
+            unit="V"
+            colorStart="#10b981"
+            colorEnd="#ef4444"
+            lastUpdate={lastUpdate}
+            showStatus={true}
+          />
+        </div>
+
+        <div className="col-span-1">
+          <SensorGauge
+            title="3-Phase Voltage"
+            value={electricityData?.voltage_3ph || 0}
             minValue={180}
             maxValue={260}
             unit="V"
@@ -126,7 +140,7 @@ const Dashboard: React.FC = () => {
 
         <div className="col-span-1">
           <SensorGauge
-            title="Temperature (UPS Room)"
+            title="Temperature (UPS)"
             value={sensor2Data?.suhu || 0}
             minValue={0}
             maxValue={50}
@@ -140,7 +154,7 @@ const Dashboard: React.FC = () => {
         
         <div className="col-span-1">
           <SensorGauge
-            title="Humidity (UPS Room)"
+            title="Humidity (UPS)"
             value={sensor2Data?.kelembapan || 0}
             minValue={0}
             maxValue={100}

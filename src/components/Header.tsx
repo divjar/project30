@@ -81,7 +81,12 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
         >
           <Menu size={24} />
         </button>
-        <h1 className="ml-4 text-xl font-semibold text-white">UMM-BSID Monitoring System</h1>
+        <div className="flex items-center">
+          <h1 className="ml-4 text-xl font-semibold text-white">UMM-BSID Monitoring System</h1>
+          <span className="ml-4 text-sm text-gray-400">
+            Last updated: {format(new Date(), 'dd MMM yyyy HH:mm:ss')}
+          </span>
+        </div>
       </div>
       
       <div className="flex items-center space-x-4">

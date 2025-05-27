@@ -18,44 +18,44 @@ const TemperatureHumidity: React.FC = () => {
 
   // Mock historical data for charts
   const temperatureHistoryData = [
-    { name: '00:00', sensor1: 23, sensor2: 24 },
-    { name: '04:00', sensor1: 22, sensor2: 23 },
-    { name: '08:00', sensor1: 24, sensor2: 25 },
-    { name: '12:00', sensor1: 26, sensor2: 27 },
-    { name: '16:00', sensor1: 25, sensor2: 26 },
-    { name: '20:00', sensor1: 24, sensor2: 25 },
-    { name: '24:00', sensor1: sensor1Data?.suhu || 23, sensor2: sensor2Data?.suhu || 24 },
+    { name: '00:00', noc: 23, ups: 24 },
+    { name: '04:00', noc: 22, ups: 23 },
+    { name: '08:00', noc: 24, ups: 25 },
+    { name: '12:00', noc: 26, ups: 27 },
+    { name: '16:00', noc: 25, ups: 26 },
+    { name: '20:00', noc: 24, ups: 25 },
+    { name: '24:00', noc: sensor1Data?.suhu || 23, ups: sensor2Data?.suhu || 24 },
   ];
 
   const humidityHistoryData = [
-    { name: '00:00', sensor1: 55, sensor2: 58 },
-    { name: '04:00', sensor1: 56, sensor2: 59 },
-    { name: '08:00', sensor1: 54, sensor2: 57 },
-    { name: '12:00', sensor1: 52, sensor2: 55 },
-    { name: '16:00', sensor1: 53, sensor2: 56 },
-    { name: '20:00', sensor1: 54, sensor2: 57 },
-    { name: '24:00', sensor1: sensor1Data?.kelembapan || 55, sensor2: sensor2Data?.kelembapan || 58 },
+    { name: '00:00', noc: 55, ups: 58 },
+    { name: '04:00', noc: 56, ups: 59 },
+    { name: '08:00', noc: 54, ups: 57 },
+    { name: '12:00', noc: 52, ups: 55 },
+    { name: '16:00', noc: 53, ups: 56 },
+    { name: '20:00', noc: 54, ups: 57 },
+    { name: '24:00', noc: sensor1Data?.kelembapan || 55, ups: sensor2Data?.kelembapan || 58 },
   ];
 
   // Mock weekly data
   const weeklyTempData = [
-    { name: 'Mon', sensor1: 24, sensor2: 25 },
-    { name: 'Tue', sensor1: 25, sensor2: 26 },
-    { name: 'Wed', sensor1: 26, sensor2: 27 },
-    { name: 'Thu', sensor1: 24, sensor2: 25 },
-    { name: 'Fri', sensor1: 23, sensor2: 24 },
-    { name: 'Sat', sensor1: 22, sensor2: 23 },
-    { name: 'Sun', sensor1: sensor1Data?.suhu || 23, sensor2: sensor2Data?.suhu || 24 },
+    { name: 'Mon', noc: 24, ups: 25 },
+    { name: 'Tue', noc: 25, ups: 26 },
+    { name: 'Wed', noc: 26, ups: 27 },
+    { name: 'Thu', noc: 24, ups: 25 },
+    { name: 'Fri', noc: 23, ups: 24 },
+    { name: 'Sat', noc: 22, ups: 23 },
+    { name: 'Sun', noc: sensor1Data?.suhu || 23, ups: sensor2Data?.suhu || 24 },
   ];
 
   const weeklyHumidityData = [
-    { name: 'Mon', sensor1: 52, sensor2: 55 },
-    { name: 'Tue', sensor1: 54, sensor2: 57 },
-    { name: 'Wed', sensor1: 56, sensor2: 59 },
-    { name: 'Thu', sensor1: 55, sensor2: 58 },
-    { name: 'Fri', sensor1: 53, sensor2: 56 },
-    { name: 'Sat', sensor1: 54, sensor2: 57 },
-    { name: 'Sun', sensor1: sensor1Data?.kelembapan || 55, sensor2: sensor2Data?.kelembapan || 58 },
+    { name: 'Mon', noc: 52, ups: 55 },
+    { name: 'Tue', noc: 54, ups: 57 },
+    { name: 'Wed', noc: 56, ups: 59 },
+    { name: 'Thu', noc: 55, ups: 58 },
+    { name: 'Fri', noc: 53, ups: 56 },
+    { name: 'Sat', noc: 54, ups: 57 },
+    { name: 'Sun', noc: sensor1Data?.kelembapan || 55, ups: sensor2Data?.kelembapan || 58 },
   ];
 
   const fetchData = async () => {
@@ -137,9 +137,8 @@ const TemperatureHumidity: React.FC = () => {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Temperature Sensors */}
         <SensorCard
-          title="Temperature (Sensor 1)"
+          title="Temperature (NOC)"
           value={sensor1Data?.suhu || 0}
           unit="°C"
           icon={<Thermometer size={24} className="text-red-400" />}
@@ -150,7 +149,7 @@ const TemperatureHumidity: React.FC = () => {
         />
         
         <SensorCard
-          title="Humidity (Sensor 1)"
+          title="Humidity (NOC)"
           value={sensor1Data?.kelembapan || 0}
           unit="%"
           icon={<Droplets size={24} className="text-blue-400" />}
@@ -161,7 +160,7 @@ const TemperatureHumidity: React.FC = () => {
         />
         
         <SensorCard
-          title="Temperature (Sensor 2)"
+          title="Temperature (UPS)"
           value={sensor2Data?.suhu || 0}
           unit="°C"
           icon={<Thermometer size={24} className="text-orange-400" />}
@@ -172,7 +171,7 @@ const TemperatureHumidity: React.FC = () => {
         />
         
         <SensorCard
-          title="Humidity (Sensor 2)"
+          title="Humidity (UPS)"
           value={sensor2Data?.kelembapan || 0}
           unit="%"
           icon={<Droplets size={24} className="text-indigo-400" />}
@@ -185,7 +184,7 @@ const TemperatureHumidity: React.FC = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
-          <h3 className="text-white text-base font-medium mb-3">Sensor 1 Status</h3>
+          <h3 className="text-white text-base font-medium mb-3">NOC Status</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="flex justify-between items-center">
               <span className="text-gray-400">Temperature Status</span>
@@ -199,27 +198,11 @@ const TemperatureHumidity: React.FC = () => {
                 status={sensor1Data?.kelembapan ? getStatusFromHumidity(sensor1Data.kelembapan) : 'offline'} 
               />
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-400">Min Temperature</span>
-              <span className="text-white">22.0 °C</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-400">Max Temperature</span>
-              <span className="text-white">27.5 °C</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-400">Min Humidity</span>
-              <span className="text-white">48 %</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-400">Max Humidity</span>
-              <span className="text-white">65 %</span>
-            </div>
           </div>
         </div>
         
         <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
-          <h3 className="text-white text-base font-medium mb-3">Sensor 2 Status</h3>
+          <h3 className="text-white text-base font-medium mb-3">UPS Room Status</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="flex justify-between items-center">
               <span className="text-gray-400">Temperature Status</span>
@@ -233,29 +216,13 @@ const TemperatureHumidity: React.FC = () => {
                 status={sensor2Data?.kelembapan ? getStatusFromHumidity(sensor2Data.kelembapan) : 'offline'} 
               />
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-400">Min Temperature</span>
-              <span className="text-white">23.0 °C</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-400">Max Temperature</span>
-              <span className="text-white">28.5 °C</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-400">Min Humidity</span>
-              <span className="text-white">52 %</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-400">Max Humidity</span>
-              <span className="text-white">69 %</span>
-            </div>
           </div>
         </div>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <SensorGauge
-          title="Temperature (Sensor 1)"
+          title="Temperature (NOC)"
           value={sensor1Data?.suhu || 0}
           minValue={0}
           maxValue={40}
@@ -265,7 +232,7 @@ const TemperatureHumidity: React.FC = () => {
         />
         
         <SensorGauge
-          title="Humidity (Sensor 1)"
+          title="Humidity (NOC)"
           value={sensor1Data?.kelembapan || 0}
           unit="%"
           colorStart="#10b981"
@@ -273,7 +240,7 @@ const TemperatureHumidity: React.FC = () => {
         />
         
         <SensorGauge
-          title="Temperature (Sensor 2)"
+          title="Temperature (UPS)"
           value={sensor2Data?.suhu || 0}
           minValue={0}
           maxValue={40}
@@ -283,7 +250,7 @@ const TemperatureHumidity: React.FC = () => {
         />
         
         <SensorGauge
-          title="Humidity (Sensor 2)"
+          title="Humidity (UPS)"
           value={sensor2Data?.kelembapan || 0}
           unit="%"
           colorStart="#10b981"
@@ -296,8 +263,8 @@ const TemperatureHumidity: React.FC = () => {
           title="Temperature History (24h)"
           data={temperatureHistoryData}
           lines={[
-            { id: 'sensor1', name: 'Sensor 1', color: '#f87171' },
-            { id: 'sensor2', name: 'Sensor 2', color: '#fb923c' }
+            { id: 'noc', name: 'NOC', color: '#f87171' },
+            { id: 'ups', name: 'UPS', color: '#fb923c' }
           ]}
           xAxisLabel="Time"
           yAxisLabel="Temperature (°C)"
@@ -307,8 +274,8 @@ const TemperatureHumidity: React.FC = () => {
           title="Humidity History (24h)"
           data={humidityHistoryData}
           lines={[
-            { id: 'sensor1', name: 'Sensor 1', color: '#60a5fa' },
-            { id: 'sensor2', name: 'Sensor 2', color: '#818cf8' }
+            { id: 'noc', name: 'NOC', color: '#60a5fa' },
+            { id: 'ups', name: 'UPS', color: '#818cf8' }
           ]}
           xAxisLabel="Time"
           yAxisLabel="Humidity (%)"
@@ -320,8 +287,8 @@ const TemperatureHumidity: React.FC = () => {
           title="Weekly Temperature Trends"
           data={weeklyTempData}
           lines={[
-            { id: 'sensor1', name: 'Sensor 1', color: '#f87171' },
-            { id: 'sensor2', name: 'Sensor 2', color: '#fb923c' }
+            { id: 'noc', name: 'NOC', color: '#f87171' },
+            { id: 'ups', name: 'UPS', color: '#fb923c' }
           ]}
           xAxisLabel="Day"
           yAxisLabel="Temperature (°C)"
@@ -331,8 +298,8 @@ const TemperatureHumidity: React.FC = () => {
           title="Weekly Humidity Trends"
           data={weeklyHumidityData}
           lines={[
-            { id: 'sensor1', name: 'Sensor 1', color: '#60a5fa' },
-            { id: 'sensor2', name: 'Sensor 2', color: '#818cf8' }
+            { id: 'noc', name: 'NOC', color: '#60a5fa' },
+            { id: 'ups', name: 'UPS', color: '#818cf8' }
           ]}
           xAxisLabel="Day"
           yAxisLabel="Humidity (%)"
