@@ -95,11 +95,11 @@ const Dashboard: React.FC = () => {
 
         <div className="col-span-1">
           <SensorGauge
-            title="3-Phase Voltage"
-            value={electricityData?.voltage_3ph || 0}
-            minValue={180}
-            maxValue={260}
-            unit="V"
+            title="Current (Phase 3-Phase)"
+            value={electricityData?.current_3ph || 0}
+            minValue={0}
+            maxValue={100}
+            unit="A"
             colorStart="#10b981"
             colorEnd="#ef4444"
             lastUpdate={lastUpdate}
